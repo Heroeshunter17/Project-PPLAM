@@ -32,3 +32,7 @@ html, body {
     linear-gradient(90deg, rgb(63, 63, 63), rgb(63, 63, 63)) bottom/100% 2px no-repeat,
     linear-gradient(90deg, rgb(255, 255, 255), rgb(255, 255, 255)) bottom/100% no-repeat;
 }
+.error {
+    color: red;
+    font-style: italic;
+}
