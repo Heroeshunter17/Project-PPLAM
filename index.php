@@ -28,6 +28,7 @@ require 'functions.php'; // bisa require atau include tergantung penggunaan
 </head>
 <body>
     <h1>Halaman Index</h1>
+    <a href="cari.php">Cari</a>
     <a href="logout.php">Log out</a>
 </body>
 </html>
