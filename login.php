@@ -2,7 +2,7 @@
 require 'functions.php';
 session_start();
 
-// jika sudah login, maka akan ditendang ke login.php
+// jika sudah login, maka akan diarahkan ke index.php
 if(isset($_SESSION['login'])){
     header("Location: index.php");
     exit;
