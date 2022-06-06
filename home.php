@@ -27,11 +27,57 @@ $jumlah_pemasukan= query("SELECT SUM(stok_terjual)* harga as pemasukan FROM stok
     <title>Keripik Firda</title>
 
     <style>
-.garis_verikal{
-  border-left: 1px black solid;
-  height:100%;
-  width: 0px;
-}
+  .garis_verikal{
+    border-left: 1px black solid;
+    height:100%;
+    width: 0px;
+  }
+        .slider {
+            width: 100%;
+            text-align: center;
+            overflow: hidden;
+            margin: 40px 0;
+        }
+        
+        .slides {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .slides::-webkit-scrollbar {
+            width: 2px;
+            height: 10px;
+        }
+        
+        .slides::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 5px;
+        }
+        
+        .slides::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        
+        .slides>div {
+            scroll-snap-align: start;
+            flex-shrink: 0;
+            width: 250px;
+            height: 500px;
+            margin: 0 15px 0 10px;
+            background: #fff;
+            transform-origin: center center;
+            transform: scale(1);
+            transition: transform 0.5s;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            font-size: 100%;
+        }
 </style>
 <div class="container mr-2 bg-light">
   <div class="row mt-2"> 
@@ -67,7 +113,7 @@ $jumlah_pemasukan= query("SELECT SUM(stok_terjual)* harga as pemasukan FROM stok
     <div class="col-2">Rp.<?= $harga["harga"] ?> </div>
     <div class="col-2"><?= $jumlah_barang_terjual["terjual"] ?>  bungkus</div>
     <div class="col-2">Rp.<?= $jumlah_pemasukan["pemasukan"] ?></div>
-    <div class="col-2 ">Rp.10.000.000,00</div>
+    <div class="col-2 ">Rp.-</div>
   </div>
 
   <br><br>
@@ -76,28 +122,38 @@ $jumlah_pemasukan= query("SELECT SUM(stok_terjual)* harga as pemasukan FROM stok
 
   <div><center> <h3>Stok Pada Setiap Toko </h3> </center></div>
 
-  <div class="row" id ="data">
-      <?php
-      require_once("./db.php"); 
-      $sql = "SELECT * FROM stok_barang
-      JOIN toko ON stok_barang.id_toko = toko.id_toko
-      JOIN produk ON stok_barang.id_produk = produk.id_produk";
-      $result = $db->query($sql);
-      while ($row = $result->fetch_assoc()) :
-      ?>  
-      <div class="col"> <div class="card m-1" style="width: 15rem; height: 420px; ">
-            <img src="img/shop.png" class="card-img-top" alt="..." height="200px">
-            <div class="card-body">
-              <h5 class="card-title"><?= $row["nama toko"] ?></h5>
-              <p class="card-text">Stok saat ini : <?= $row["stok"] ?> pcs</p>
-              <p class="card-text">Terjual : <?= $row["stok_terjual"] ?> pcs</p>
-              <p class="card-text">Stok di masukkan : <?= $row["stok_dimasukkan"] ?> pcs</p>
-              <p class="card-text">Pendapatan :Rp.<?= $row["stok_terjual"] * $row['harga'] ?> </p>
+    <div class="slider">
+        <div class="slides">
+            <?php
+            require_once("./db.php"); 
+            $sql = "SELECT * FROM stok_barang
+            JOIN toko ON stok_barang.id_toko = toko.id_toko
+            JOIN produk ON stok_barang.id_produk = produk.id_produk";
+            $result = $db->query($sql);
+            while ($row = $result->fetch_assoc()) :
+            ?>  
+              <div>
+                <div class="card m-1" style="width: 15rem; height: 450px; ">
+                    <img src="img/<?= $row["id_toko"]?>.jpg" class="card-img-top" alt="..." height="220px">
+                    <div class="card-body">
+                      <h5 class="card-title"><?= $row["nama toko"] ?></h5>
+                      <hr>
+                      <p class="card-text"><strong>Stok saat ini : </strong><?= $row["stok"] ?> pcs</p>
+                      <p class="card-text"><strong>Terjual : </strong><?= $row["stok_terjual"] ?> pcs</p>
+                      <p class="card-text"><strong>Stok di masukkan : </strong><?= $row["stok_dimasukkan"] ?> pcs</p>
+                      <p class="card-text"><strong>Pendapatan : </strong>Rp.<?= $row["stok_terjual"] * $row['harga'] ?> </p>
+                    </div>
+                </div>
+              </div>
+        
+            <?php endwhile; ?>  
             </div>
+
         </div>
-      </div>
-      <?php endwhile; ?>   
-  </div>
+    </div>
+
+
+
           
 </div>
 </php>
