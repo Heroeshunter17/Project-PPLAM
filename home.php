@@ -105,14 +105,12 @@ $jumlah_pemasukan= query("SELECT SUM(stok_terjual)* harga as pemasukan FROM stok
     <div class="col-2 "><h6>Stock Saat Ini</h6></div>
     <div class="col-2"><h6>Harga/pcs</h6></div>
     <div class="col-2"><h6>Terjual</h6></div>
-    <div class="col-2"><h6>Pemasukan</h6></div>
     <div class="col-2"><h6>Pengeluaran</h6></div>
   </div>
   <div class="row">
     <div class="col-2"><?= $jumlah_barang["barang"] ?> bungkus</div>
     <div class="col-2">Rp.<?= $harga["harga"] ?> </div>
     <div class="col-2"><?= $jumlah_barang_terjual["terjual"] ?>  bungkus</div>
-    <div class="col-2">Rp.<?= $jumlah_pemasukan["pemasukan"] ?></div>
     <div class="col-2 ">Rp.-</div>
   </div>
 
