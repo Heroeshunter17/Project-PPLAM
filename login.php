@@ -4,6 +4,7 @@ session_start();
 
 // jika sudah login, maka akan diarahkan ke index.php
 if(isset($_SESSION['login'])){
+    
     header("Location: index.php");
     exit;
 }
@@ -12,17 +13,29 @@ if (isset($_POST['login'])){
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    $result = mysqli_query($conn,"SELECT * FROM users 
+    $result = mysqli_query($conn,"SELECT * FROM users
+                JOIN peran ON peran.id_peran = users.id_peran 
                 WHERE email = '$email'");
 
     // cek email
     if(mysqli_num_rows($result) === 1){ //menghitung ada berapa baris yang dikembalikan
         // cek password
         $row = mysqli_fetch_assoc($result);
-        // password_verify(passwordsebelumdiacak,passwordsetelahdiacak) -> mengecek string apakah sama dengan hashnya (kebalikan password verify)
-        if (password_verify($password,$row['password'])) { 
+        if ($password == $row['password']) { 
+            $result2 = mysqli_query($conn,"SELECT * FROM users
+                JOIN peran ON peran.id_peran = users.id_peran 
+                WHERE email = '$email'");
+            $row2 = mysqli_fetch_assoc($result2);
             //set session
             $_SESSION['login'] = true;
+            $_SESSION['peran'] = $row2['peran'];
+            // if($peran == 'Admin'|| $peran == 'Pemilik'  ){
+            //     header("Location: index.php");
+            //     exit;
+            // } else {
+            //     header("Location: indexKaryawan.php");
+            //     exit;
+            // }
             header("Location: index.php");
             exit;
         }
@@ -49,7 +62,7 @@ if (isset($_POST['login'])){
 <body>
     <div class="background">
         
-    </div>
+    
     <div class="judul text-center">
         <title class="tulisan">Kelompok xx</title>
         <h1 class="tulisan">Selamat datang di aplikasi xx, silahkan<br>
@@ -75,6 +88,7 @@ if (isset($_POST['login'])){
                 </section>
             </section>
         </section>
+    </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>    

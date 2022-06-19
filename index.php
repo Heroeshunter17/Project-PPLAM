@@ -7,6 +7,15 @@ if(!isset($_SESSION['login'])){
     exit;
 }
 
+$peran = $_SESSION['peran'];
+
+if($peran == 'Admin'|| $peran == 'Pemilik'  ){
+    $setFitur = '';
+} else {
+    $setFitur = "hidden";
+}
+
+
 ?>
 
 
@@ -34,6 +43,9 @@ if(!isset($_SESSION['login'])){
       height:100%;
       width: 0px;
     }
+    .hidden {
+    display: none;
+}
     </style>
 
 </head>
@@ -46,14 +58,14 @@ if(!isset($_SESSION['login'])){
               <img src="img/user.png" class="img-circle profile_img" height="100" width="100">
               </div>
               <div class="profile_info">
-                <span>Welcome,</span>
-                <h4>Owner</h4>
+                <span>Selamat Datang,</span>
+                <h4><?= $peran ?></h4>
               </div>
             </div>
 
             <div>
              <div class="card bg-light">
-             <a href="index.php?page=tampil" class="btn btn-light"><i class="fa fa-home"></i> Home </a>
+             <a href="index.php?page=tampil" class="btn btn-light"><i class="fa fa-home" ></i> Home </a>
              </div>
 
              <div class="card mt-3">
@@ -61,15 +73,12 @@ if(!isset($_SESSION['login'])){
              </div>
 
              <div class="card bg-light mt-3">
-             <a href="" class="btn btn-light"><i class="fa fa-dollar" ></i> Pemasukan </a>
+             <a href="index.php?page=pengeluaran" class="btn btn-light"><i class="fa fa-bolt"></i> Pengeluaran </a>
              </div>
 
+             <!-- < $setFitur;?> -->
              <div class="card bg-light mt-3">
-             <a href="" class="btn btn-light"><i class="fa fa-bolt"></i> Pengeluaran </a>
-             </div>
-
-             <div class="card bg-light mt-3">
-             <a href="" class="btn btn-light"><i class="fa fa-gear"></i> Pengaturan Akun </a>
+             <a href="index.php?page=pengaturan" id="<?= $setFitur?>" class="btn btn-light" ><i class="fa fa-gear" type="hidden" ></i> Pengaturan Akun </a>
              </div>
             </div
     </center>
@@ -86,6 +95,41 @@ if(!isset($_SESSION['login'])){
         case 'stok':
             include 'stok.php';
             break;
+        case 'pengeluaran':
+            $peran = $_SESSION['peran'];
+            if ($peran != 'Pemilik'){
+                include 'pengeluaranKaryawan.php';
+                exit;
+            } else {
+                include 'pengeluaran.php';
+                exit;
+            }
+            // include 'pengeluaran.php';
+            // break;
+        case 'pengeluaranKaryawan':
+            include 'pengeluaranKaryawan.php';
+            break;
+        case 'pengaturan':
+            include 'pengaturan.php';
+            break;
+        case 'editStok':
+            include 'editStok.php';
+            break;
+        case 'tambahStok':
+            include 'tambahStok.php';
+            break;
+        case 'editPengeluaran':
+              include 'editpengeluaran.php';
+              break;
+        case 'tambahPengeluaran':
+              include 'tambahPengeluaran.php';
+              break;
+        case 'editAkun':
+              include 'editAkun.php';
+              break;
+        case 'tambahAkun':
+              include 'tambahAkun.php';
+              break;
         default:
         include 'home.php';
         break;
@@ -97,5 +141,6 @@ if(!isset($_SESSION['login'])){
 </div>
 </div>
 </div>
+<script src="script.js"></script>
 </body>
 </html>

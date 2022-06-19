@@ -1,7 +1,16 @@
 <?php 
-
+// // local
+// define("HOST","localhost");
+// define("USER","root");
+// define("PASS","");
+// define("DB","keripikfirda");
 // koneksi ke database 
 // mysqli_connect("nama host","username","password","nama database")
+
+//server
+// $conn= mysqli_connect("localhost","id19099436_root","FirdasProduct+100", "id19099436_keripikfirda");
+
+// local
 $conn= mysqli_connect("localhost","root","", "keripikfirda");
 
 
@@ -17,31 +26,184 @@ function query($query){
 
 
 
-// function tambah($data){
-//     global $conn;
-//     // htmlspecialchars agar html dalam input tidak dijalankan
-//     $NRP = htmlspecialchars($data['NRP']);
-//     $nama = htmlspecialchars($data['nama']);
-//     $email = htmlspecialchars($data['email']);
-//     $jurusan = htmlspecialchars($data['jurusan']);
+function tambah_stok($data){
+    global $conn;
+    // htmlspecialchars agar html dalam input tidak dijalankan
+    $nama_toko = htmlspecialchars($data['nama_toko']);
+    $produk = 1;
+    $jumlah = htmlspecialchars($data['jumlah_stok']);
+    $expired_date = htmlspecialchars($data['expired_date']);
+    $tanggal_pengiriman = htmlspecialchars($data['tanggal_pengiriman']);
+    $stok_terjual = htmlspecialchars($data['stok_terjual']);
     
-//     // upload gambar dulu
-//     $gambar = upload();
-//     // gambar === false sama dengan !gambar
-//     if (!$gambar){
-//         return false;
-//     }
+    // querry insert data
+    $querry = "INSERT INTO stok_barang
+                VALUES
+                ('', '$nama_toko','$produk','$jumlah','$stok_terjual','$tanggal_pengiriman','$expired_date')
+            ";
+    mysqli_query($conn,$querry); 
 
+    return mysqli_affected_rows($conn);
+};
+
+
+function tambah_pengeluaran($data){
+    global $conn;
+    // htmlspecialchars agar html dalam input tidak dijalankan
+    $bahan = htmlspecialchars($data['bahan']);
+    $jumlah = htmlspecialchars($data['jumlah']);
+    $nominal = htmlspecialchars($data['nominal']);
+    $tanggal = htmlspecialchars($data['tanggal']);
+    $deskripsi = htmlspecialchars($data['deskripsi']);
     
-//     // querry insert data
-//     $querry = "INSERT INTO mahasiswa
-//                 VALUES
-//                 ('', '$NRP','$nama','$email','$jurusan','$gambar')
-//             ";
-//     mysqli_query($conn,$querry); 
+    // querry insert data
+    $querry = "INSERT INTO pengeluaran
+                VALUES
+                ('', '$bahan','$jumlah','$nominal','$tanggal','$deskripsi')
+            ";
+    mysqli_query($conn,$querry); 
 
-//     return mysqli_affected_rows($conn);
-// };
+    return mysqli_affected_rows($conn);
+};
+
+function tambah_akun($data){
+    global $conn;
+    // htmlspecialchars agar html dalam input tidak dijalankan
+    $nama = htmlspecialchars($data['nama']);
+    $email = htmlspecialchars($data['email']);
+    $domisili = htmlspecialchars($data['domisili']);
+    $tanggal_masuk = htmlspecialchars($data['tanggal_masuk']);
+    $password = htmlspecialchars($data['password']);
+    $peran = htmlspecialchars($data['peran']);
+    
+    // querry insert data
+    $querry = "INSERT INTO users
+                VALUES
+                ('', $peran,'$nama','$email','$password','$domisili','$tanggal_masuk')
+            ";
+    mysqli_query($conn,$querry); 
+
+    return mysqli_affected_rows($conn);
+};
+
+
+function ubah_akun($data) {
+    global $conn;
+    // htmlspecialchars agar html dalam input tidak dijalankan
+    $id_users = htmlspecialchars($data['id_users']);
+    $id_peran = htmlspecialchars($data['id_peran']);
+    $nama = htmlspecialchars($data['nama']);
+    $email = htmlspecialchars($data['email']);
+    $domisili = htmlspecialchars($data['domisili']);
+    $tanggal_masuk = htmlspecialchars($data['tanggal_masuk']);
+    $password = htmlspecialchars($data['password']);
+
+
+        // querry insert data
+    $querry = "UPDATE users SET
+            id_users = '$id_users',
+            id_peran = '$id_peran',
+            nama = '$nama',
+            email = '$email',
+            password = '$password',
+            domisili = '$domisili',
+            tanggal_masuk = '$tanggal_masuk'
+            WHERE id_users= '$id_users'
+        ";
+    mysqli_query($conn,$querry); 
+
+    return mysqli_affected_rows($conn);
+};
+
+function ubah_harga($data) {
+    global $conn;
+    $id_produk = 1 ;
+    $nama = 'Kripik Nangka Firda';
+    $jenis_barang = 'Kripik';
+    // htmlspecialchars agar html dalam input tidak dijalankan
+    $harga = htmlspecialchars($data['keuntungan'] / $data['jumlah_produk']);
+
+
+        // querry insert data
+    $querry = "UPDATE produk SET
+            id_produk = '$id_produk' ,
+            nama = '$nama',
+            jenis_barang = '$jenis_barang',
+            harga = '$harga'
+            WHERE id_produk = '$id_produk'
+        ";
+    mysqli_query($conn,$querry); 
+
+    return mysqli_affected_rows($conn);
+};
+
+function ubah_pengeluaran($data) {
+    global $conn;
+    // htmlspecialchars agar html dalam input tidak dijalankan
+    $id_pengeluaran = htmlspecialchars($data['id_pengeluaran']);
+    $bahan = htmlspecialchars($data['bahan']);
+    $jumlah = htmlspecialchars($data['jumlah']);
+    $nominal = htmlspecialchars($data['nominal']);
+    $tanggal = htmlspecialchars($data['tanggal']);
+    $deskripsi = htmlspecialchars($data['deskripsi']);
+
+
+        // querry insert data
+    $querry = "UPDATE pengeluaran SET
+            id_pengeluaran = '$id_pengeluaran',
+            bahan = '$bahan',
+            jumlah = '$jumlah',
+            nominal = '$nominal',
+            tanggal = '$tanggal',
+            deskripsi = '$deskripsi'
+            WHERE id_pengeluaran = '$id_pengeluaran'
+        ";
+    mysqli_query($conn,$querry); 
+
+    return mysqli_affected_rows($conn);
+};
+
+function ubah_stok($data) {
+    global $conn;
+    // htmlspecialchars agar html dalam input tidak dijalankan
+    $id_stok = htmlspecialchars($data['id_stok']);
+    $id_produk = 1;
+    $id_toko = htmlspecialchars($data['nama_toko']);
+    $jumlah_stok = htmlspecialchars($data['jumlah_stok']);
+    $expired_date = htmlspecialchars($data['expired_date']);
+    $tanggal_pengiriman = htmlspecialchars($data['tanggal_pengiriman']);
+    $stok_terjual = htmlspecialchars($data['stok_terjual']);
+
+
+        // querry insert data
+    $querry = "UPDATE stok_barang SET
+            id_stok = '$id_stok',
+            id_toko = '$id_toko',
+            id_produk = '$id_produk',
+            jumlah = '$jumlah_stok',
+            stok_terjual = '$stok_terjual',
+            tanggal_pengiriman = '$tanggal_pengiriman',
+            tanggal_expired = '$expired_date'
+            WHERE id_stok = '$id_stok'
+        ";
+    mysqli_query($conn,$querry); 
+
+    return mysqli_affected_rows($conn);
+};
+
+function hapus_pengeluaran($id_pengeluaran) {
+    global $conn;
+    mysqli_query($conn, "DELETE FROM pengeluaran WHERE id_pengeluaran=$id_pengeluaran");
+    return mysqli_affected_rows($conn); // mengembalikan jumlah baris yang terpengaruh di kueri SELECT, INSERT, UPDATE, REPLACE, atau DELETE sebelumnya.
+
+}
+
+function rupiah($angka){
+	
+	$hasil_rupiah = "Rp " . number_format($angka,2,',','.');
+	return $hasil_rupiah;
+ 
+}
 
 
 // function upload(){

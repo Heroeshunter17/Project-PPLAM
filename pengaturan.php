@@ -21,41 +21,45 @@ width: 0px;
 <div class="container mr-2 bg-light">
 <div class="row mt-2"> 
     <div >
-            <a href="index.php?page=tambahStok" class="btn btn-secondary"><i class="fa fa-plus me-2"></i> Tambah Data </a>
+            <a href="index.php?page=tambahAkun" class="btn btn-secondary"><i class="fa fa-plus me-2"></i> Tambah Data </a>
+
     </div>
     <!-- <div class="card mt-3"  style="height: 600px; ">isi tabel</div> -->
         <div class="row col-9" id ="data">
             <table class="table mt-4">
                 <thead class="table-secondary">
                     <tr>
-                        <th>Nama Toko</th>
-                        <th>Jumlah Stok</th>
-                        <th>Expired Date</th>
-                        <th>Tgl Pengiriman</th>
-                        <th>Stok Terjual</th>
+                        <th>Nama</th>
+                        <th>Email</th>
+                        <th>Domisili</th>
+                        <th>Tanggal Masuk</th>
+                        <th>Password</th>
+                        <th>Peran</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
-                <tbody id="data_stok">
+                <tbody id="data_pengaturan">
+                    
                 <?php
-                    require_once("./db.php");
-                    $sql = "SELECT * FROM stok_barang
-                    JOIN toko ON stok_barang.id_toko = toko.id_toko";
-                    $result = $db->query($sql);
+                        require_once("./db.php");
+                        $sql = "SELECT * FROM users
+                        Join peran ON peran.id_peran = users.id_peran";
+                        $result = $db->query($sql);
 
-                    while ($stok = $result->fetch_assoc()) :
-                    ?>
-                    <tr>
-                        <td><?= $stok["nama toko"]?></td>
-                        <td><?= $stok["jumlah"]?></td>
-                        <td><?= $stok["tanggal_expired"]?></td>
-                        <td><?= $stok["tanggal_pengiriman"]?></td>
-                        <td><?= $stok["stok_terjual"]?></td>
-                        <td>
-                        <a href="index.php?page=editStok&id_stok=<?= $stok["id_stok"]?>" class="btn btn-secondary btn-sm"><i class="bi bi-pencil-square me-2"></i>Edit</a>
-                        </td>
-                    </tr>
-                    <?php endwhile ; ?>
+                        while ($pengaturan = $result->fetch_assoc()) :
+                        ?>
+                        <tr>
+                            <td><?= $pengaturan["nama"]?></td>
+                            <td><?= $pengaturan["email"]?></td>
+                            <td><?= $pengaturan["domisili"]?></td>
+                            <td><?= $pengaturan["tanggal_masuk"]?></td>
+                            <td><?= $pengaturan["password"]?></td>
+                            <td><?= $pengaturan["peran"]?></td>
+                            <td><a href="index.php?page=editAkun&id_users=<?= $pengaturan["id_users"]?>" class="btn btn-secondary btn-sm"><i class="bi bi-pencil-square me-2"></i>Edit</a></td>
+
+                        </tr>
+                        <?php endwhile ; ?>
+                    
                 </tbody>
             </table>
         </div>

@@ -10,12 +10,14 @@ if(!isset($_SESSION['login'])){
 require 'functions.php'; // bisa require atau include tergantung penggunaan
 // $stok_barang = query("SELECT * FROM stok_barang");
 $jumlah_barang = query("SELECT SUM(jumlah) as barang FROM stok_barang ")[0];
-$pengeluaran = query("SELECT SUM(nominal) as pengeluaran FROM pengeluaran ")[0];
+$jumlah_barang_terjual = query("SELECT SUM(stok_terjual) as terjual FROM stok_barang ")[0];
 $harga = query("SELECT harga FROM produk ")[0];
+$jumlah_pemasukan= query("SELECT SUM(stok_terjual)* harga as pemasukan FROM stok_barang JOIN produk ON stok_barang.id_produk = produk.id_produk ")[0];
 
 ?>
 
-</php>
+<!DOCTYPE html>
+<html lang="en">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="style.css">
@@ -64,7 +66,7 @@ $harga = query("SELECT harga FROM produk ")[0];
             scroll-snap-align: start;
             flex-shrink: 0;
             width: 250px;
-            height: 500px;
+            height: 650px;
             margin: 0 15px 0 10px;
             background: #fff;
             transform-origin: center center;
@@ -77,20 +79,27 @@ $harga = query("SELECT harga FROM produk ")[0];
             overflow: hidden;
             font-size: 100%;
         }
-        .hidden {
-    display: none;
-}
 </style>
 <div class="container mr-2 bg-light">
-<div class="row mt-2"> 
-    <form action="" method="GET">
-      <h3>Periode</h3> 
-      <input type="date" id="setFirst" name="setFirst" min="2022-01-01">
-      -
-      <input type="date" id="setLast" class="me-3" name="setLast" min="2022-01-01">
-      <button type="submit" name="submit" id="submit" class="btn btn-secondary"><i class="bi bi-sd-card me-2"></i>Set</button>
-
-    </form>
+  <div class="row mt-2"> 
+    <div class="col-2"> <h3>Periode</h3> </div>
+    <div class="col-2" width="100">
+      <select  class="bg-light border-0">
+      <option value="17 agustus 2022">17 agustus 2022</option>
+      <option value="18 agustus 2022">18 agustus 2022</option>
+      <option value="19 agustus 2022">19 agustus 2022</option>
+      <option value="20 agustus 2022">20 agustus 2022</option>
+      </select>
+    </div>
+    -
+    <div class="col">
+      <select  class="bg-light border-0">
+      <option value="17 agustus 2022">17 agustus 2022</option>
+      <option value="18 agustus 2022">18 agustus 2022</option>
+      <option value="19 agustus 2022">19 agustus 2022</option>
+      <option value="20 agustus 2022">20 agustus 2022</option>
+      </select>
+    </div>
   </div>
 
   <div class="row">
@@ -100,8 +109,8 @@ $harga = query("SELECT harga FROM produk ")[0];
   </div>
   <div class="row">
     <div class="col-2"><?= $jumlah_barang["barang"] ?> bungkus</div>
-    <div class="col-2"><?=  rupiah($harga["harga"]) ?></div>
-    <div class="col-2 "><?= rupiah($pengeluaran["pengeluaran"]) ?></div>
+    <div class="col-2">Rp.<?= $harga["harga"] ?> </div>
+    <div class="col-2 ">Rp.-</div>
   </div>
 
   <br><br>
@@ -114,31 +123,21 @@ $harga = query("SELECT harga FROM produk ")[0];
         <div class="slides">
             <?php
             require_once("./db.php"); 
-            if (isset($_GET["setFirst"]) && isset($_GET["setLast"]) ) {
-              $min = $_GET["setFirst"];
-              $max = $_GET["setLast"];
-              $sql = "SELECT * FROM stok_barang
-              JOIN toko ON stok_barang.id_toko = toko.id_toko 
-              WHERE tanggal_pengiriman >= '$min' AND tanggal_pengiriman <= '$max' ";
-            }else {
-              $sql = "SELECT * FROM stok_barang
-              JOIN toko ON stok_barang.id_toko = toko.id_toko ";
-            }
+            $sql = "SELECT * FROM stok_barang
+            JOIN toko ON stok_barang.id_toko = toko.id_toko";
             $result = $db->query($sql);
             while ($row = $result->fetch_assoc()) :
             ?>  
               <div>
-                <div class="card m-1" style="width: 40rem; height: 500px; ">
-                    <img src="img/<?= $row["id_toko"]?>.jpg" class="card-img-top" alt="..." height="220px">
+                <div class="card m-1" style="width: 15rem; height: 600px; ">
+                    <img src="img/<?= $row["id_toko"]?>.jpg" class="card-img-top" alt="..." height="300px">
                     <div class="card-body">
                       <h5 class="card-title"><strong><?= $row["nama toko"] ?></strong></h5>
                       <hr>
                       <p class="card-text"><strong>Jumlah Stok : </strong><?= $row["jumlah"] ?> pcs</p>
-                      <p class="card-text"><strong>Expired Date : </strong><?= $row["tanggal_expired"] ?></p>
-                      <p class="card-text"><strong>Tgl Pengiriman : </strong><?= $row["tanggal_pengiriman"] ?></p>
-                      <p class="card-text"><strong>Deskripsi : </strong> </p>
-                      <p><?= $row["deskripsi"] ?></p>
-                     
+                      <p class="card-text"><strong>Expired Date : </strong><?= $row["tanggal_expired"] ?> pcs</p>
+                      <p class="card-text"><strong>Tgl Pengiriman : </strong><?= $row["tanggal_pengiriman"] ?> pcs</p>
+                      <p class="card-text"><strong>Deskripsi : </strong><?= $row["deskripsi"] ?></p>
                     </div>
                 </div>
               </div>
@@ -153,5 +152,4 @@ $harga = query("SELECT harga FROM produk ")[0];
 
           
 </div>
-<script src="script.js"></script>
-</php>
+</html>
