@@ -77,9 +77,6 @@ $harga = query("SELECT harga FROM produk ")[0];
             overflow: hidden;
             font-size: 100%;
         }
-        .hidden {
-    display: none;
-}
 </style>
 <div class="container mr-2 bg-light">
 <div class="row mt-2"> 

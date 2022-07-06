@@ -61,9 +61,6 @@ border-left: 1px black solid;
 height:100%;
 width: 0px;
 }
-.hidden {
-    display: none;
-}
 </style>
 <form action="" method="POST">
     <div class="container mr-2 bg-light">

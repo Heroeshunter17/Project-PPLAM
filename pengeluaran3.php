@@ -18,45 +18,41 @@ width: 0px;
 <div class="container mr-2 bg-light">
 <div class="row mt-2"> 
     <div >
-            <a href="index.php?page=tambahAkun" class="btn btn-secondary"><i class="fa fa-plus me-2"></i> Tambah Data </a>
+            <a href="index.php?page=tambahPengeluaran" class="btn btn-secondary"><i class="fa fa-plus me-2"></i> Tambah Data </a>
 
+
+            <a href="index.php?page=editPengeluaran" class="btn btn-secondary"><i class="fa fa-pencil me-2"></i> Ubah Data </a>
     </div>
     <!-- <div class="card mt-3"  style="height: 600px; ">isi tabel</div> -->
         <div class="row col-9" id ="data">
             <table class="table mt-4">
                 <thead class="table-secondary">
                     <tr>
-                        <th>Nama</th>
-                        <th>Email</th>
-                        <th>Domisili</th>
-                        <th>Tanggal Masuk</th>
-                        <th>Password</th>
-                        <th>Peran</th>
-                        <th>Aksi</th>
+                        <th>Bahan</th>
+                        <th>Jumlah</th>
+                        <th>Nominal</th>
+                        <th>Tanggal</th>
+                        <th>Deskripsi</th>
                     </tr>
                 </thead>
-                <tbody id="data_pengaturan">
+                <tbody id="data_pengeluaran">
                     
                 <?php
                         require_once("./db.php");
-                        $sql = "SELECT * FROM users
-                        Join peran ON peran.id_peran = users.id_peran";
+                        $sql = "SELECT * FROM pengeluaran";
                         $result = $db->query($sql);
 
-                        while ($pengaturan = $result->fetch_assoc()) :
+                        while ($pengeluaran = $result->fetch_assoc()) :
                         ?>
                         <tr>
-                            <td><?= $pengaturan["nama"]?></td>
-                            <td><?= $pengaturan["email"]?></td>
-                            <td><?= $pengaturan["domisili"]?></td>
-                            <td><?= $pengaturan["tanggal_masuk"]?></td>
-                            <td><?= $pengaturan["password"]?></td>
-                            <td><?= $pengaturan["peran"]?></td>
-                            <td><a href="index.php?page=editAkun&id_users=<?= $pengaturan["id_users"]?>" class="btn btn-secondary btn-sm"><i class="bi bi-pencil-square me-2"></i>Edit</a></td>
-
+                            <td><?= $pengeluaran["bahan"]?></td>
+                            <td><?= $pengeluaran["jumlah"]?></td>
+                            <td>Rp.<?= $pengeluaran["nominal"]?></td>
+                            <td><?= $pengeluaran["tanggal"]?></td>
+                            <td><?= $pengeluaran["deskripsi"]?></td>
                         </tr>
                         <?php endwhile ; ?>
-                    
+                  
                 </tbody>
             </table>
         </div>
@@ -64,5 +60,4 @@ width: 0px;
 
 
 </div>
-<script src="script.js"></script>
 </php>

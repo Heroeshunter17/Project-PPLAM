@@ -25,11 +25,11 @@
 // });
 
 
-// document.getElementById("hidden").style.visibility = "hidden";
-// document.getElementById("hidden2").style.visibility = "hidden";
-// document.getElementById("hidden3").style.visibility = "hidden";
-// document.getElementById("hidden4").style.visibility = "hidden";
-// document.getElementById("hidden5").style.visibility = "hidden";
+document.getElementById("hidden").style.visibility = "hidden";
+document.getElementById("hidden2").style.visibility = "hidden";
+document.getElementById("hidden3").style.visibility = "hidden";
+document.getElementById("hidden4").style.visibility = "hidden";
+document.getElementById("hidden5").style.visibility = "hidden";
 // $.document.querySelector("#hidden").hidden = true;
 // $.document.querySelector("#hidden2").hidden = true;
 // $.document.querySelector("#hidden3").hidden = true;
@@ -48,17 +48,11 @@
 //     e.style.visibility = "hidden";
 // }
 
-// $(document).ready(function() {
-//     $.get("pengeluaran.php", function() {
-//         $.each("#hidden", function() {
-//             $("#hidden").style.visibility = "hidden";
-
-//         });
-//     });
-// });
-
-// $("#hidden *").hide();
-
 $(document).ready(function() {
-    $("#hidden").hide();
+    $.get("pengeluaran.php", function() {
+        $.each("#hidden", function() {
+            $("#hidden").style.visibility = "hidden";
+
+        });
+    });
 });

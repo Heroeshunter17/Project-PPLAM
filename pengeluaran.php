@@ -21,7 +21,6 @@ if($peran == 'Admin'|| $peran == 'Pemilik'  ){
 }
 
 
-
 // cek apakah data berhasil ditambahkan atau tidak setelah menggunakan functions.php
 if (isset($_POST["submit"])){
 
@@ -68,9 +67,6 @@ if (isset($_POST["submit"])){
 border-left: 1px black solid;
 height:100%;
 width: 0px;
-}
-.hidden {
-    display: none;
 }
 </style>
 <form action="" method="POST">
@@ -142,5 +138,7 @@ width: 0px;
 
 
     </div>
-<script src="script.js"></script>
+<script>
+    document.getElementById("hidden").style.visibility = "hidden";
+</script>
 </php>

@@ -14,9 +14,6 @@ border-left: 1px black solid;
 height:100%;
 width: 0px;
 }
-.hidden {
-    display: none;
-}
 </style>
 <div class="container mr-2 bg-light">
 <div class="row mt-2"> 

@@ -6,11 +6,6 @@
 // define("DB","keripikfirda");
 // koneksi ke database 
 // mysqli_connect("nama host","username","password","nama database")
-
-//server
-// $conn= mysqli_connect("localhost","id19099436_root","FirdasProduct+100", "id19099436_keripikfirda");
-
-// local
 $conn= mysqli_connect("localhost","root","", "keripikfirda");
 
 

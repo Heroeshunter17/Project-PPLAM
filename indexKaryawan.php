@@ -7,15 +7,6 @@ if(!isset($_SESSION['login'])){
     exit;
 }
 
-$peran = $_SESSION['peran'];
-
-if($peran == 'Admin'|| $peran == 'Pemilik'  ){
-    $setFitur = '';
-} else {
-    $setFitur = "hidden";
-}
-
-
 ?>
 
 
@@ -43,7 +34,6 @@ if($peran == 'Admin'|| $peran == 'Pemilik'  ){
       height:100%;
       width: 0px;
     }
-    .hidden { visibility: hidden; }
     </style>
 
 </head>
@@ -56,14 +46,14 @@ if($peran == 'Admin'|| $peran == 'Pemilik'  ){
               <img src="img/user.png" class="img-circle profile_img" height="100" width="100">
               </div>
               <div class="profile_info">
-                <span>Selamat Datang,</span>
-                <h4><?= $peran ?></h4>
+                <span>Welcome,</span>
+                <h4>Owner</h4>
               </div>
             </div>
 
             <div>
              <div class="card bg-light">
-             <a href="index.php?page=tampil" class="btn btn-light"><i class="fa fa-home" ></i> Home </a>
+             <a href="index.php?page=tampil" class="btn btn-light"><i class="fa fa-home"></i> Home </a>
              </div>
 
              <div class="card mt-3">
@@ -73,12 +63,7 @@ if($peran == 'Admin'|| $peran == 'Pemilik'  ){
              <div class="card bg-light mt-3">
              <a href="index.php?page=pengeluaran" class="btn btn-light"><i class="fa fa-bolt"></i> Pengeluaran </a>
              </div>
-
-             <!-- < $setFitur;?> -->
-             <div class="card bg-light mt-3">
-             <a href="index.php?page=pengaturan" id="<?= $setFitur?>" class="btn btn-light" ><i class="fa fa-gear" type="hidden" ></i> Pengaturan Akun </a>
-             </div>
-            </div
+             
     </center>
     </div>
     <div class="container col-9 mt-3">
@@ -96,9 +81,6 @@ if($peran == 'Admin'|| $peran == 'Pemilik'  ){
         case 'pengeluaran':
             include 'pengeluaran.php';
             break;
-        case 'pengaturan':
-            include 'pengaturan.php';
-            break;
         case 'editStok':
             include 'editStok.php';
             break;
@@ -111,12 +93,7 @@ if($peran == 'Admin'|| $peran == 'Pemilik'  ){
         case 'tambahPengeluaran':
               include 'tambahPengeluaran.php';
               break;
-        case 'editAkun':
-              include 'editAkun.php';
-              break;
-        case 'tambahAkun':
-              include 'tambahAkun.php';
-              break;
+
         default:
         include 'home.php';
         break;
@@ -128,6 +105,5 @@ if($peran == 'Admin'|| $peran == 'Pemilik'  ){
 </div>
 </div>
 </div>
-<script src="script.js"></script>
 </body>
 </html>
